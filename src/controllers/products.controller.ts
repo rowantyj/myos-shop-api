@@ -36,7 +36,21 @@ class ProductsController {
       next(error);
     }
   };
+  public getProductByKeyword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const keyword = req.params.keyword;
+      const findAllProductData: Product[] =
+        await this.productService.findProduct(keyword);
 
+      res.status(200).json({ data: findAllProductData, message: 'findOne' });
+    } catch (error) {
+      next(error);
+    }
+  };
   public createProduct = async (
     req: Request,
     res: Response,

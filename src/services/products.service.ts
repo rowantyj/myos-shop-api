@@ -1,4 +1,3 @@
-import { hash } from 'bcrypt';
 import { PrismaClient, Product } from '@prisma/client';
 import { CreateProductDto } from '@dtos/products.dto';
 import { HttpException } from '@exceptions/HttpException';
@@ -20,6 +19,36 @@ class ProductService {
       where: { id: productId },
     });
     if (!findProduct) throw new HttpException(409, "Product doesn't exist");
+
+    return findProduct;
+  }
+
+  public async findProduct(keyword: string): Promise<Product[]> {
+    if (isEmpty(keyword)) throw new HttpException(400, 'Keyword is empty');
+
+    const findProduct: Product[] = await this.product.findMany({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: keyword,
+            },
+          },
+          {
+            description: {
+              contains: keyword,
+            },
+          },
+        ],
+      },
+      orderBy: [
+        {
+          price: 'asc',
+        },
+      ],
+    });
+    if (!findProduct)
+      throw new HttpException(409, `Can't find any product with '${keyword}`);
 
     return findProduct;
   }

@@ -36,7 +36,8 @@ function generateRecords() {
   const records = [];
   for (let i = 0, len = 30; i < len; i++) {
     records.push({
-      title: randomWords({ exactly: 3, join: ' ' }),
+      title: randomWords({ exactly: 2, join: ' ' }),
+      description: randomWords({ exactly: 5, join: ' ' }),
       currency: 'USD',
       price: (Math.random() * 1000).toFixed(2),
       quantity: parseInt(Math.ceil(Math.random() * 100).toString()),

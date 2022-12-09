@@ -19,6 +19,10 @@ class ProductsRoute implements Routes {
       `${this.path}/:id(\\d+)`,
       this.productsController.getProductById,
     );
+    this.router.get(
+      `${this.path}/find/:keyword`,
+      this.productsController.getProductByKeyword,
+    );
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateProductDto, 'body'),
