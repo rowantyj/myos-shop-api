@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { Routes } from '@interfaces/routes.interface';
-import { ApolloServer } from 'apollo-server';
 import { PrismaClient } from '@prisma/client';
 import ProductService from '@/services/products.service';
+import { ApolloServer } from 'apollo-server';
 
 class GraphqlRoute implements Routes {
   public path = '/gql';
@@ -61,7 +61,7 @@ class GraphqlRoute implements Routes {
 
     server
       .listen()
-      .then(({ url }) => console.log(`Server is running on ${url}`));
+      .then(({ url }) => console.log(`Graphql Server is running on ${url}`));
   }
 }
 
