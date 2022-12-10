@@ -2,7 +2,7 @@
   "name": "myos-shop-api",
   "version": "0.0.0",
   "description": "TypeScript + Prisma + Postgres + Express API Server",
-  "author": "",
+  "author": "rowantan",
   "license": "ISC",
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
@@ -13,8 +13,8 @@
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
     "prisma:init": "prisma init",
-    "prisma:migrate": "prisma migrate dev --preview-feature",
-    "prisma:generate": "prisma generate",
+    "prisma:migrate": "dotenv -e .env.development.local -- npx prisma migrate dev --preview-feature",
+    "prisma:generate": "dotenv -e .env.development.local -- npx prisma generate",
     "prisma:push": "dotenv -e .env.development.local -- npx prisma db push",
     "deploy:prod": "npm run build && pm2 start ecosystem.config.js --only prod",
     "deploy:dev": "pm2 start ecosystem.config.js --only dev"
