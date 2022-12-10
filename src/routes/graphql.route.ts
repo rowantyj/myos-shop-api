@@ -2,12 +2,14 @@ import { Router } from 'express';
 import { Routes } from '@interfaces/routes.interface';
 import { PrismaClient } from '@prisma/client';
 import ProductService from '@/services/products.service';
+import OrderService from '@/services/orders.service';
 import { ApolloServer } from 'apollo-server';
 
 class GraphqlRoute implements Routes {
   public path = '/gql';
   public router = Router();
   public product = new ProductService();
+  public order = new OrderService();
 
   constructor() {
     this.initializeRoutes();
@@ -19,6 +21,7 @@ class GraphqlRoute implements Routes {
       info: String!
       products: [Product!]!
       findProduct(keyword: String!): [Product!]!
+      orders: [Order!]!
     }
 
     type Product {
@@ -31,6 +34,15 @@ class GraphqlRoute implements Routes {
       quantity: Int!
       picture: String!
     }
+    type Order {
+      id: ID!
+      uuid: String!
+      status: String!
+      created_at: String!
+      updated_at: String!
+      items: [Product!]!
+
+    }
     `;
 
     const resolvers = {
@@ -39,6 +51,7 @@ class GraphqlRoute implements Routes {
         products: async () => await this.product.findAllProduct(),
         findProduct: async (parent, args, contextValue, info) =>
           await this.product.findProduct(args.keyword),
+        orders: async () => await this.order.findAllOrder(),
       },
       Product: {
         id: parent => parent.id,
@@ -48,6 +61,12 @@ class GraphqlRoute implements Routes {
         currency: parent => parent.currency,
         price: parent => parent.price,
         picture: parent => parent.picture,
+      },
+      Order: {
+        id: parent => parent.id,
+        uuid: parent => parent.uuid,
+        status: parent => parent.status,
+        items: parent => parent.items,
       },
     };
 
