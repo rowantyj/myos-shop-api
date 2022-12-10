@@ -1,7 +1,7 @@
 # Logs
 logs
 *.log
-npm-debug.log*
+nby black girlpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
@@ -74,7 +74,7 @@ web_modules/
 
 # dotenv environment variable files
 .env
-.env.development.local
+# .env.development.local
 .env.test.local
 .env.production.local
 .env.local
