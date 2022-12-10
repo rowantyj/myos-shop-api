@@ -35,7 +35,7 @@ class GraphqlRoute implements Routes {
 
     const resolvers = {
       Query: {
-        info: () => `This is the API of a Hackernews Clone`,
+        info: () => `This is the API of MYOS-Shop`,
         products: async () => await this.product.findAllProduct(),
         findProduct: async (parent, args, contextValue, info) =>
           await this.product.findProduct(args.keyword),
