@@ -1,6 +1,6 @@
-import { IsString } from 'class-validator';
+import { IsArray } from 'class-validator';
 
 export class CreateOrderDto {
-  @IsString()
-  public status: string;
+  @IsArray()
+  public items: BigInt[];
 }

@@ -24,6 +24,11 @@ class GraphqlRoute implements Routes {
       orders: [Order!]!
     }
 
+    type Mutation {
+      createOrder(items: [Int!]!): Order!
+      updateOrder(id: Int!, status: String!): Order!
+    }
+
     type Product {
       id: ID!
       uuid: String!
@@ -41,7 +46,6 @@ class GraphqlRoute implements Routes {
       created_at: String!
       updated_at: String!
       items: [Product!]!
-
     }
     `;
 
@@ -52,6 +56,12 @@ class GraphqlRoute implements Routes {
         findProduct: async (parent, args, contextValue, info) =>
           await this.product.findProduct(args.keyword),
         orders: async () => await this.order.findAllOrder(),
+      },
+      Mutation: {
+        createOrder: async (parent, args, contextValue, info) =>
+          await this.order.createOrder(args.items),
+        updateOrder: async (parent, args, contextValue, info) =>
+          await this.order.updateOrderStatus(args.id, args.status),
       },
       Product: {
         id: parent => parent.id,

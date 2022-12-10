@@ -27,11 +27,32 @@ class OrderService {
     return findOrder;
   }
 
-  public async updateOrder(
-    orderId: number,
-    orderData: CreateOrderDto,
-  ): Promise<Order> {
+  public async createOrder(orderData: CreateOrderDto): Promise<Order> {
     if (isEmpty(orderData)) throw new HttpException(400, 'orderData is empty');
+
+    const items = [];
+    orderData.forEach(e => {
+      items.push({
+        id: e,
+      });
+    });
+    const createOrderData: Order = await this.order.create({
+      data: {
+        items: {
+          connect: items,
+        },
+      },
+      include: {
+        items: true,
+      },
+    });
+    return createOrderData;
+  }
+  public async updateOrderStatus(
+    orderId: number,
+    orderStatus: string,
+  ): Promise<Order> {
+    if (isEmpty(orderStatus)) throw new HttpException(400, 'Status is empty');
 
     const findOrder: Order = await this.order.findUnique({
       where: { id: orderId },
@@ -40,7 +61,12 @@ class OrderService {
 
     const updateOrderData = await this.order.update({
       where: { id: orderId },
-      data: { ...orderData },
+      data: {
+        status: orderStatus,
+      },
+      include: {
+        items: true,
+      },
     });
     return updateOrderData;
   }

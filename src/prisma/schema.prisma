@@ -58,5 +58,5 @@ model Order {
   status     OrderStatus @default(PAYMENT_PENDING)
   created_at DateTime    @default(now())
   updated_at DateTime    @default(now())
-  items      Product[]
+  items    Product[]
 }
