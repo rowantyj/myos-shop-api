@@ -16,9 +16,13 @@ rowantyj@gmail.com
 
 # Getting Started
 
-## Quick-Installation
+## Pre-installation
 
-cd to the project folder
+1. Ensure that you have Node, Postgres, Prisma.
+1. Clone this project to your local machine.
+1. Change directory to the project.
+
+## Quick-Installation
 
 give permission to execute the file if needed
 
@@ -28,19 +32,17 @@ sudo chmod +x setup.sh
 
 run `./setup.sh`
 
-## Pre-installation
+---
 
-1. Ensure that you have Node, Postgres, Prisma.
-1. Clone this project to your local machine.
-1. Change directory to the project.
+## Manual installation
+
+### Install the dependencies
 
 ```
 npm install --legacy-peer-deps
 ```
 
-## After installation
-
-### Init Prisma
+### Init Prisma from schema
 
 ```
 npm run prisma:generate
