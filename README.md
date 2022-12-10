@@ -16,6 +16,18 @@ rowantyj@gmail.com
 
 # Getting Started
 
+## Quick-Installation
+
+cd to the project folder
+
+give permission to execute the file if needed
+
+```
+sudo chmod +x setup.sh
+```
+
+run `./setup.sh`
+
 ## Pre-installation
 
 1. Ensure that you have Node, Postgres, Prisma.
@@ -23,7 +35,7 @@ rowantyj@gmail.com
 1. Change directory to the project.
 
 ```
-npm install
+npm install --legacy-peer-deps
 ```
 
 ## After installation
@@ -31,19 +43,13 @@ npm install
 ### Init Prisma
 
 ```
-npm run prisma:init
+npm run prisma:generate
 ```
 
 ### Seed the database
 
 ```
 npx prisma db seed
-```
-
-### Tell Prisma to generate the client for query
-
-```
-npm run prisma:generate
 ```
 
 ### Start the process
