@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 async function main() {
   await seedUsers();
   await seedProducts();
+  await seedOrders();
 }
 main()
   .then(async () => {
@@ -16,7 +17,7 @@ main()
     process.exit(1);
   });
 async function seedUsers() {
-  const rowan = await prisma.user.upsert({
+  const user = await prisma.user.upsert({
     where: { email: 'rowantyj@gmail.com' },
     update: {},
     create: {
@@ -24,15 +25,15 @@ async function seedUsers() {
       password: 'password123',
     },
   });
-  console.log({ rowan });
+  console.log({ user });
 }
 async function seedProducts() {
   const products = await prisma.product.createMany({
-    data: generateRecords(),
+    data: generateProducts(),
   });
   console.log({ products });
 }
-function generateRecords() {
+function generateProducts() {
   const records = [];
   for (let i = 0, len = 30; i < len; i++) {
     records.push({
@@ -46,4 +47,30 @@ function generateRecords() {
   }
 
   return records;
+}
+async function seedOrders() {
+  const products = await prisma.product.findMany();
+  const orders = await prisma.order.create({
+    data: {
+      items: {
+        connect: generateOrders(products),
+      },
+    },
+    include: {
+      items: true,
+    },
+  });
+  console.log({ orders });
+}
+function generateOrders(products) {
+  /* Randomly add 5 items from the products list */
+  const orderItems = [];
+  for (let i = 0, len = 5; i < len; i++) {
+    const orderItem = {
+      id: products[Math.floor(Math.random() * products.length)].id,
+    };
+    orderItems.push(orderItem);
+  }
+  console.log({ orderItems });
+  return orderItems;
 }
