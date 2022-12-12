@@ -21,6 +21,7 @@ rowantyj@gmail.com
 1. Ensure that you have Node, Postgres, Prisma.
 1. Clone this project to your local machine.
 1. Change directory to the project.
+1. Create a localhost database `myos-shop` with default user `postgres` at `port=5432`
 
 ## Quick-Installation
 
@@ -46,6 +47,10 @@ npm install --legacy-peer-deps
 
 ```
 npm run prisma:generate
+```
+
+```
+npm run prisma:push
 ```
 
 ### Seed the database
