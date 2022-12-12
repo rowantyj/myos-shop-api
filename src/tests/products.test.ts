@@ -1,7 +1,6 @@
 import request from 'supertest';
 import App from '@/app';
 import { CreateProductDto } from '@dtos/products.dto';
-import ProductRoute from '@routes/products.route';
 import randomWords from 'random-words';
 
 afterAll(async () => {
@@ -21,5 +20,10 @@ describe('Testing Products', () => {
   it('should have a positive price', async () => {
     expect(parseInt(mockData.price)).toBeGreaterThan(0);
   });
-  it('should have a product picture', async () => {});
+  it('should have more than 1 quantity', async () => {
+    expect(mockData.quantity).toBeGreaterThan(0);
+  });
+  it('should have a correct currency format', async () => {
+    expect(mockData.currency).toHaveLength(3);
+  });
 });

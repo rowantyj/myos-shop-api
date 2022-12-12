@@ -1,9 +1,6 @@
 import request from 'supertest';
-import { PrismaClient, Order } from '@prisma/client';
-import App from '@/app';
+import App from '@/app'; 
 import { CreateOrderDto } from '@dtos/orders.dto';
-import OrderRoute from '@routes/orders.route';
-import randomWords from 'random-words';
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
@@ -28,30 +25,10 @@ const mockData = {
   ],
 };
 describe('Testing Orders', () => {
-  describe('[GET] /orders', () => {
-    it('response findAll orders', async () => {
-      const ordersRoute = new OrderRoute();
-      const orders = ordersRoute.ordersController.orderService.orders;
-
-      orders.findMany = jest.fn().mockReturnValue([mockData]);
-
-      const app = new App([ordersRoute]);
-      return request(app.getServer()).get(`${ordersRoute.path}`).expect(200);
-    });
+  it('should have a correct starting status', async () => {
+    expect(mockData.status).toEqual('PAYMENT_PENDING');
   });
-
-  describe('[GET] /orders/:id', () => {
-    it('response findOne order', async () => {
-      const orderId = 10;
-      const ordersRoute = new OrderRoute();
-      const orders = ordersRoute.ordersController.orderService.orders;
-
-      orders.findUnique = jest.fn().mockReturnValue(mockData);
-
-      const app = new App([ordersRoute]);
-      return request(app.getServer())
-        .get(`${ordersRoute.path}/${orderId}`)
-        .expect(200);
-    });
+  it('should have more than 1 items', async () => {
+    expect(mockData.items.length).toBeGreaterThan(0);
   });
 });
